@@ -4,17 +4,13 @@ import TodoListComponent from "./components/TodoListComponent";
 import TodoItemVo, { create as createTodo } from "./dto/TodoItemVo";
 import TodoItem from "./components/TodoItem";
 
-// 할일 번호
-let todoNo = 0;
-
 const App: FunctionComponent = () => {
   const [todoItemList, setTodoItemList] = useState<TodoItemVo[]>([]);
+  const [todoId, setTodoId] = useState<number>(0);
 
   const submitTodo = (todoText: string) => {
-    console.log("처음 todoNo" + todoNo);
-
     const submitVo: TodoItemVo = {
-      id: todoNo,
+      id: todoId,
       text: todoText,
       done: false
     };
@@ -22,7 +18,7 @@ const App: FunctionComponent = () => {
     // 배열에 마지막에 추가
     //setTodoItemList([...todoItemList, createTodo(submitVo)]);
     setTodoItemList(todoItemList.map(createTodo).concat(createTodo(submitVo)));
-    todoNo++;
+    setTodoId(todoId + 1);
   };
 
   return (
