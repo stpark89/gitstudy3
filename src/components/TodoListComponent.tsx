@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react";
-import TodoItem from "./TodoItem";
-import TodoItemVo, { create as createTodo } from "../dto/TodoItemVo";
+import React, { useState } from "react";
 
 interface ITodoListComponentInnerProps {
   submitTodo: (todoText: string) => void;
@@ -8,13 +6,6 @@ interface ITodoListComponentInnerProps {
 }
 
 const TodoListComponent = (props: ITodoListComponentInnerProps) => {
-  useEffect(() => {
-    console.log("처음 mount");
-    return () => console.log("처음 un Mount ");
-  }, []);
-
-  // 할일 번호
-  let todoNo = 0;
   const [tmpTodo, setTodo] = useState<string>("");
 
   // 1.입력한 값 등록
@@ -34,7 +25,7 @@ const TodoListComponent = (props: ITodoListComponentInnerProps) => {
           <div className="col-sm-12">
             <form>
               <div className="form-group">
-                <label>할일</label>
+                <label>제목</label>
                 <input
                   type="text"
                   className="form-control"
@@ -46,7 +37,10 @@ const TodoListComponent = (props: ITodoListComponentInnerProps) => {
               <button
                 type="button"
                 className="btn btn-primary"
-                onClick={() => props.submitTodo(tmpTodo)}
+                onClick={() => {
+                  setTodo("");
+                  return props.submitTodo(tmpTodo);
+                }}
               >
                 등록
               </button>
@@ -57,7 +51,8 @@ const TodoListComponent = (props: ITodoListComponentInnerProps) => {
               <thead>
                 <tr>
                   <th>No</th>
-                  <th>할일</th>
+                  <th>제목</th>
+                  <th>상세내용</th>
                   <th>완료 여부</th>
                 </tr>
               </thead>
